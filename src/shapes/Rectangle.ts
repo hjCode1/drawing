@@ -34,4 +34,16 @@ export class Rectangle extends Shape {
   isPointInside(x: number, y: number): boolean {
     return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height
   }
+
+  isPointNearEdge(x: number, y: number, threshold: number): boolean {
+    const nearLeft = Math.abs(x - this.x) <= threshold
+    const nearRight = Math.abs(x - (this.x + this.width)) <= threshold
+    const nearTop = Math.abs(y - this.y) <= threshold
+    const nearBottom = Math.abs(y - (this.y + this.height)) <= threshold
+
+    return (
+      ((nearLeft || nearRight) && y >= this.y && y <= this.y + this.height) ||
+      ((nearTop || nearBottom) && x >= this.x && x <= this.x + this.width)
+    )
+  }
 }

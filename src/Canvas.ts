@@ -1,6 +1,9 @@
 import { Shape } from './shapes/Shape'
 import { Freehand } from './shapes/Freehand'
 import { Triangle } from './shapes/Triangle'
+import { Circle } from './shapes/Circle'
+import { Rectangle } from './shapes/Rectangle'
+import { CustomLine } from './shapes/CustomLine'
 import { DrawingState } from './DrawingState'
 import { HistoryManager, Action } from './HistoryManager'
 import { ShapeFactoryProducer } from './factories/ShapeFactoryProducer'
@@ -189,11 +192,7 @@ export class Canvas {
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape instanceof Triangle) {
-        if (shape.isPointInside(x, y) || shape.isPointNearEdge(x, y, eraserThreshold)) {
-          erasedShapes.push(this.shapes.splice(i, 1)[0])
-        }
-      } else if (shape.isPointInside(x, y)) {
+      if (this.shouldEraseShape(shape, x, y, eraserThreshold)) {
         erasedShapes.push(this.shapes.splice(i, 1)[0])
       }
     }
@@ -201,6 +200,14 @@ export class Canvas {
     if (erasedShapes.length > 0) {
       this.historyManager.addAction({ type: 'delete', shapes: erasedShapes })
       this.redrawShapes()
+    }
+  }
+
+  private shouldEraseShape(shape: Shape, x: number, y: number, threshold: number): boolean {
+    if (shape.isTransparent()) {
+      return shape.isPointNearEdge(x, y, threshold)
+    } else {
+      return shape.isPointInside(x, y)
     }
   }
 

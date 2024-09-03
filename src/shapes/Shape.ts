@@ -12,6 +12,11 @@ export abstract class Shape {
 
   abstract draw(): void
   abstract isPointInside(x: number, y: number): boolean
+  abstract isPointNearEdge(x: number, y: number, threshold: number): boolean
+
+  isTransparent(): boolean {
+    return this.properties.fillColor === 'transparent'
+  }
 
   protected applyStyles(): void {
     this.ctx.strokeStyle = this.properties.lineColor

@@ -32,4 +32,9 @@ export class Circle extends Shape {
     const distance = Math.sqrt(Math.pow(x - this.centerX, 2) + Math.pow(y - this.centerY, 2))
     return distance <= this.radius
   }
+
+  isPointNearEdge(x: number, y: number, threshold: number): boolean {
+    const distance = Math.sqrt(Math.pow(x - this.centerX, 2) + Math.pow(y - this.centerY, 2))
+    return Math.abs(distance - this.radius) <= threshold
+  }
 }

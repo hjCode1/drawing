@@ -31,6 +31,10 @@ export class Line extends Shape {
     this.resetStyles()
   }
 
+  isPointNearEdge(x: number, y: number, threshold: number): boolean {
+    return this.isPointInside(x, y)
+  }
+
   isPointInside(x: number, y: number): boolean {
     const threshold = 5
     const distToLine =

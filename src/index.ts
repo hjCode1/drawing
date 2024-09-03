@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     erase: document.getElementById('eraseBtn'),
     undo: document.getElementById('undoBtn'),
     redo: document.getElementById('redoBtn'),
+    save: document.getElementById('saveBtn'),
+    load: document.getElementById('loadBtn'),
   }
 
   const setActiveButton = (activeButton: HTMLElement | null) => {
@@ -39,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   buttons.undo?.addEventListener('click', () => canvas.undo())
   buttons.redo?.addEventListener('click', () => canvas.redo())
+  buttons.save?.addEventListener('click', () => {})
+  buttons.load?.addEventListener('click', () => {})
 
   const lineColorPicker = document.getElementById('lineColorPicker') as HTMLInputElement
   const fillColorPicker = document.getElementById('fillColorPicker') as HTMLInputElement
@@ -65,9 +69,4 @@ document.addEventListener('DOMContentLoaded', () => {
   opacityInput?.addEventListener('input', (e) => {
     canvas.setOpacity(parseFloat((e.target as HTMLInputElement).value))
   })
-
-  // save & load test
-  const saveButton = document.getElementById('save') as HTMLInputElement
-  const loadButton = document.getElementById('load') as HTMLInputElement
-  const fileInput = document.getElementById('fileInput') as HTMLInputElement
 })

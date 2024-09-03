@@ -76,6 +76,10 @@ export class CustomLine extends Shape {
     this.ctx.stroke()
   }
 
+  isPointNearEdge(x: number, y: number, threshold: number): boolean {
+    return this.isPointInside(x, y)
+  }
+
   isPointInside(x: number, y: number): boolean {
     const threshold = Math.max(5, this.properties.lineWidth / 2)
     return this.distanceToLine(x, y, this.startX, this.startY, this.endX, this.endY) < threshold
