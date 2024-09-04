@@ -1,11 +1,13 @@
 import { Shape } from './Shape'
-import { ShapeProperties, ShapeType } from '../types'
+import { ShapeProperties, ShapeType, EndpointShape } from '../types'
 
 export class Line extends Shape {
   protected startX: number
   protected startY: number
   protected endX: number
   protected endY: number
+  // protected startShape: EndpointShape
+  // protected endShape: EndpointShape
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -13,13 +15,17 @@ export class Line extends Shape {
     startX: number,
     startY: number,
     endX: number,
-    endY: number
+    endY: number,
+    startShape: EndpointShape = EndpointShape.None,
+    endShape: EndpointShape = EndpointShape.None
   ) {
     super(ctx, properties)
     this.startX = startX
     this.startY = startY
     this.endX = endX
     this.endY = endY
+    // this.startShape = startShape
+    // this.endShape = endShape
   }
 
   draw(): void {
@@ -45,5 +51,22 @@ export class Line extends Shape {
           this.endY * this.startX
       ) / Math.sqrt(Math.pow(this.endY - this.startY, 2) + Math.pow(this.endX - this.startX, 2))
     return distToLine < threshold
+  }
+
+  serialize(): object {
+    return {
+      type: this.getType(),
+      properties: this.properties,
+      startX: this.startX,
+      startY: this.startY,
+      endX: this.endX,
+      endY: this.endY,
+      // startShape: this.startShape,
+      // endShape: this.endShape,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Line
   }
 }

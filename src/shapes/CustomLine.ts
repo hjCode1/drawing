@@ -1,11 +1,9 @@
-import { Shape } from './Shape'
-import { CustomLineProperties, EndpointShape } from '../types'
+import { CustomLineProperties, EndpointShape, ShapeType } from '../types'
+import { Line } from './Line'
 
-export class CustomLine extends Shape {
-  private startX: number
-  private startY: number
-  private endX: number
-  private endY: number
+export class CustomLine extends Line {
+  private startShape: EndpointShape
+  private endShape: EndpointShape
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -15,11 +13,9 @@ export class CustomLine extends Shape {
     endX: number,
     endY: number
   ) {
-    super(ctx, properties)
-    this.startX = startX
-    this.startY = startY
-    this.endX = endX
-    this.endY = endY
+    super(ctx, properties, startX, startY, endX, endY)
+    this.startShape = properties.startShape
+    this.endShape = properties.endShape
   }
 
   draw(): void {
@@ -111,5 +107,25 @@ export class CustomLine extends Shape {
     const dx = x - xx
     const dy = y - yy
     return Math.sqrt(dx * dx + dy * dy)
+  }
+
+  serialize(): object {
+    return {
+      ...super.serialize(),
+      startShape: this.startShape,
+      endShape: this.endShape,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Line
+  }
+
+  getCustomProperties(): CustomLineProperties {
+    return {
+      ...this.properties,
+      startShape: this.startShape,
+      endShape: this.endShape,
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Shape } from './Shape'
-import { ShapeProperties } from '../types'
+import { ShapeProperties, ShapeType } from '../types'
 
 export class Circle extends Shape {
   private centerX: number
@@ -36,5 +36,19 @@ export class Circle extends Shape {
   isPointNearEdge(x: number, y: number, threshold: number): boolean {
     const distance = Math.sqrt(Math.pow(x - this.centerX, 2) + Math.pow(y - this.centerY, 2))
     return Math.abs(distance - this.radius) <= threshold
+  }
+
+  serialize(): object {
+    return {
+      type: ShapeType.Circle,
+      properties: this.properties,
+      centerX: this.centerX,
+      centerY: this.centerY,
+      radius: this.radius,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Circle
   }
 }

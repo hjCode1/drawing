@@ -12,12 +12,13 @@ export class ShapeFactoryProducer {
     shapeType: ShapeType,
     ctx: CanvasRenderingContext2D,
     properties: ShapeProperties,
-    startShape?: EndpointShape,
-    endShape?: EndpointShape
+    startShape: EndpointShape,
+    endShape: EndpointShape
   ): ShapeFactory {
     switch (shapeType) {
       case ShapeType.Line:
-        return new LineFactory(ctx, properties, startShape || EndpointShape.None, endShape || EndpointShape.None)
+        return new LineFactory(ctx, properties, startShape, endShape)
+      // return new LineFactory(ctx, properties, startShape || EndpointShape.None, endShape || EndpointShape.None)
       // case ShapeType.Arrow:
       //   return new ArrowFactory(ctx, properties);
       case ShapeType.Circle:

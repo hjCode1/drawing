@@ -1,5 +1,5 @@
 import { Shape } from './Shape'
-import { ShapeProperties } from '../types'
+import { ShapeProperties, ShapeType } from '../types'
 
 export class Rectangle extends Shape {
   private x: number
@@ -45,5 +45,20 @@ export class Rectangle extends Shape {
       ((nearLeft || nearRight) && y >= this.y && y <= this.y + this.height) ||
       ((nearTop || nearBottom) && x >= this.x && x <= this.x + this.width)
     )
+  }
+
+  serialize(): object {
+    return {
+      type: ShapeType.Rectangle,
+      properties: this.properties,
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Rectangle
   }
 }

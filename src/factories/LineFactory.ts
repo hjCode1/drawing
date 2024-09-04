@@ -2,6 +2,7 @@ import { ShapeFactory } from './ShapeFactory'
 import { CustomLine } from '../shapes/CustomLine'
 import { Shape } from '../shapes/Shape'
 import { ShapeProperties, EndpointShape, CustomLineProperties } from '../types'
+import { Line } from '../shapes/Line'
 
 export class LineFactory extends ShapeFactory {
   private startShape: EndpointShape
@@ -19,11 +20,15 @@ export class LineFactory extends ShapeFactory {
   }
 
   createShape(startX: number, startY: number, endX: number, endY: number): Shape {
-    const customLineProperties: CustomLineProperties = {
-      ...this.properties,
-      startShape: this.startShape,
-      endShape: this.endShape,
+    if (this.startShape !== EndpointShape.None || this.endShape !== EndpointShape.None) {
+      const customProperties: CustomLineProperties = {
+        ...this.properties,
+        startShape: this.startShape,
+        endShape: this.endShape,
+      }
+      return new CustomLine(this.ctx, customProperties, startX, startY, endX, endY)
+    } else {
+      return new Line(this.ctx, this.properties, startX, startY, endX, endY)
     }
-    return new CustomLine(this.ctx, customLineProperties, startX, startY, endX, endY)
   }
 }

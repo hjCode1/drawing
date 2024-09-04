@@ -1,4 +1,4 @@
-import { LineStyle, ShapeProperties } from '../types'
+import { LineStyle, ShapeProperties, ShapeType } from '../types'
 
 // 모든 도형의 기본이 되는 추상 클래스
 export abstract class Shape {
@@ -13,6 +13,8 @@ export abstract class Shape {
   abstract draw(): void
   abstract isPointInside(x: number, y: number): boolean
   abstract isPointNearEdge(x: number, y: number, threshold: number): boolean
+  abstract serialize(): object
+  abstract getType(): ShapeType
 
   isTransparent(): boolean {
     return this.properties.fillColor === 'transparent'

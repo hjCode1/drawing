@@ -41,8 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   buttons.undo?.addEventListener('click', () => canvas.undo())
   buttons.redo?.addEventListener('click', () => canvas.redo())
-  buttons.save?.addEventListener('click', () => {})
-  buttons.load?.addEventListener('click', () => {})
+  buttons.save?.addEventListener('click', () => {
+    const savedData = canvas.saveCanvas()
+    console.log('savedData', savedData)
+    localStorage.setItem('canvasData', savedData)
+  })
+  buttons.load?.addEventListener('click', () => {
+    const savedData = localStorage.getItem('canvasData')
+    if (savedData) {
+      canvas.loadCanvas(savedData)
+    }
+  })
 
   const lineColorPicker = document.getElementById('lineColorPicker') as HTMLInputElement
   const fillColorPicker = document.getElementById('fillColorPicker') as HTMLInputElement

@@ -1,5 +1,5 @@
 import { Shape } from './Shape'
-import { ShapeProperties } from '../types'
+import { ShapeProperties, ShapeType } from '../types'
 
 // 자유 곡선 클래스
 export class Freehand extends Shape {
@@ -11,6 +11,10 @@ export class Freehand extends Shape {
 
   addPoint(x: number, y: number): void {
     this.points.push({ x, y })
+  }
+
+  addPoints(points: { x: number; y: number }[]): void {
+    this.points.push(...points)
   }
 
   draw(): void {
@@ -81,5 +85,17 @@ export class Freehand extends Shape {
     const dx = x - xx
     const dy = y - yy
     return Math.sqrt(dx * dx + dy * dy)
+  }
+
+  serialize(): object {
+    return {
+      type: this.getType(),
+      properties: this.properties,
+      points: this.points,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Freehand
   }
 }

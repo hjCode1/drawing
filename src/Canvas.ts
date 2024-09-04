@@ -9,6 +9,7 @@ import { HistoryManager, Action } from './HistoryManager'
 import { ShapeFactoryProducer } from './factories/ShapeFactoryProducer'
 import { ShapeFactory } from './factories/ShapeFactory'
 import { ShapeType, EndpointShape, LineStyle } from './types'
+import { deserializeShape } from './ShapeSerializer'
 
 export class Canvas {
   private canvas: HTMLCanvasElement
@@ -239,5 +240,20 @@ export class Canvas {
       this.lineEndShape = (e.target as HTMLSelectElement).value as EndpointShape
       this.updateShapeFactory()
     })
+  }
+
+  saveCanvas(): string {
+    const saveData = {
+      shapes: this.shapes.map((shape) => shape.serialize()),
+      drawingState: this.drawingState,
+    }
+    return JSON.stringify(saveData)
+  }
+
+  loadCanvas(jsonData: string): void {
+    const loadedData = JSON.parse(jsonData)
+    this.shapes = loadedData.shapes.map((shapeData: any) => deserializeShape(shapeData, this.ctx))
+    this.drawingState = loadedData.drawingState
+    this.redrawShapes()
   }
 }

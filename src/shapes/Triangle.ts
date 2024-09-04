@@ -1,5 +1,5 @@
 import { Shape } from './Shape'
-import { ShapeProperties } from '../types'
+import { ShapeProperties, ShapeType } from '../types'
 
 export class Triangle extends Shape {
   private x1: number
@@ -95,5 +95,22 @@ export class Triangle extends Shape {
     const dx = px - xx
     const dy = py - yy
     return Math.sqrt(dx * dx + dy * dy)
+  }
+
+  serialize(): object {
+    return {
+      type: ShapeType.Triangle,
+      properties: this.properties,
+      x1: this.x1,
+      y1: this.y1,
+      x2: this.x2,
+      y2: this.y2,
+      x3: this.x3,
+      y3: this.y3,
+    }
+  }
+
+  getType(): ShapeType {
+    return ShapeType.Triangle
   }
 }
